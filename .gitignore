@@ -1,0 +1,30 @@
+/node_modules
+# Logs
+logs
+*.log
+
+# Dependency directories
+node_modules/
+
+# Environment files
+.env
+
+# Build artifacts
+dist/
+
+# Editor specific files
+.vscode/
+.idea/
+
+# Compiled output
+out/
+
+# OS generated files
+.DS_Store
+
+# npm lock file
+package-lock.json
+
+# Yarn lock file
+yarn.lock
+

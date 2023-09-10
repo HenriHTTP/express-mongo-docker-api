@@ -1,0 +1,15 @@
+{
+    "singleQuote": true,
+    "semi": true,
+    "htmlWhitespaceSensitivity": "ignore",
+    "tabWidth": 2,
+    "printWidth": 80,
+    "overrides": [
+      {
+        "files": "*.ejs",
+        "options": {
+          "parser": "html"
+        }
+      }
+    ]
+  }
