@@ -1,3 +1,3 @@
-// user sschemas 
+// user sschemas
 
-const mongoose =  require ('../databases/conn')
+const mongoose = require('../databases/conn');
