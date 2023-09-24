@@ -7,6 +7,14 @@ const users = mongoose.model(
   'users',
   new Schema(
     {
+      name: {
+        type: String,
+        require: true,
+      },
+      lastname: {
+        type: String,
+        require: true,
+      },
       username: {
         type: String,
         require: true,
