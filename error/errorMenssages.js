@@ -28,4 +28,10 @@ module.exports = {
     details:
       'The provided username is already taken. Please choose a different username.',
   },
+  userNotFound: {
+    status: 404,
+    error: 'Username or password not found',
+    details:
+      'The provided datas is not already taken. Please choose a valid password or username.',
+  },
 };
