@@ -1,7 +1,6 @@
 const users = require('../models/user.schema');
 const validator = require('validator');
 const errorMessages = require('../error/errorMenssages');
-const errorMenssages = require('../error/errorMenssages');
 
 const registerValidation = async (req, res, next) => {
   try {
@@ -22,7 +21,7 @@ const registerValidation = async (req, res, next) => {
     // validationn  if required values  is  null
     for (const fields of requirefields) {
       if (!req.body[fields]) {
-        return res.status(400).json(errorMessages.requiredField(field));
+        return res.status(400).json(errorMessages.requiredField(fields));
       }
     }
 
