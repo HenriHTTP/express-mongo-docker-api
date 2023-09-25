@@ -21,20 +21,20 @@ const LoginValidations = async (req, res, next) => {
     // validationn  if email is already in use
     const emailExist = await users.findOne({ email: email });
     if (!emailExist) {
-      return res.status(400).json(errorMenssages.userNotFound);
+      return res.status(400).json(errorMenssages.userNotFound());
     }
 
     // validationn  if username is already in use
     const usernameExist = await users.findOne({ username: username });
     if (!usernameExist) {
-      return res.status(400).json(errorMenssages.userNotFound);
+      return res.status(400).json(errorMenssages.userNotFound());
     }
 
     const user = await users.findOne({ email: email });
     const passwordMatch = bcrypt.compareSync(password, user.password);
 
     if (!passwordMatch) {
-      return res.status(401).json(errorMenssages.userNotFound);
+      return res.status(401).json(errorMenssages.userNotFound());
     }
     next();
   } catch (err) {
