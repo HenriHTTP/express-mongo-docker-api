@@ -30,6 +30,7 @@ const LoginValidations = async (req, res, next) => {
       return res.status(400).json(errorMenssages.userNotFound());
     }
 
+    // validationn  if passaword is invalid
     const user = await users.findOne({ email: email });
     const passwordMatch = bcrypt.compareSync(password, user.password);
 

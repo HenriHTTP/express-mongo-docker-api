@@ -38,13 +38,13 @@ const registerValidation = async (req, res, next) => {
     // validationn  if email is already in use
     const emailExist = await users.findOne({ email: email });
     if (emailExist) {
-      return res.status(400).json(errorMenssages.emailInUse());
+      return res.status(400).json(errorMessages.emailInUse());
     }
 
     // validationn  if username is already in use
     const usernameExist = await users.findOne({ username: username });
     if (usernameExist) {
-      return res.status(400).json(errorMenssages.usernameInUse());
+      return res.status(400).json(errorMessages.usernameInUse());
     }
 
     next();
