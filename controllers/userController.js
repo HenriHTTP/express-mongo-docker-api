@@ -1,6 +1,7 @@
 const users = require('../models/user.schema');
 const bcrypt = require('bcryptjs');
 const createToken = require('../helpers/createToken');
+const decodeToken = require('../helpers/decodeToken');
 
 class userController {
   // method register controller
@@ -37,6 +38,14 @@ class userController {
     } catch (err) {
       res.status(500).json(err);
     }
+  }
+
+  //method getuserbytolken
+  static async checkuser(req, res) {
+    const token = await decodeToken(req);
+    const user = await users.findOne({ _id: token.id }, { password: 0 });
+
+    res.json(user);
   }
 }
 
