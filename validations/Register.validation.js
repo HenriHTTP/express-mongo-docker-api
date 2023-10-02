@@ -2,7 +2,7 @@ const users = require('../models/user.schema');
 const validator = require('validator');
 const errorMessages = require('../error/errorMenssages');
 
-const registerValidation = async (req, res, next) => {
+async function registerValidation(req, res, next) {
   try {
     //require params
     const { name, lastname, email, username, password, confirmpassword } =
@@ -51,6 +51,6 @@ const registerValidation = async (req, res, next) => {
   } catch (err) {
     res.status(500).json({ error: `Internal server error ${err}` });
   }
-};
+}
 
 module.exports = registerValidation;

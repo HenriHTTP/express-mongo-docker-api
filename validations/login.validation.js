@@ -3,7 +3,7 @@ const validator = require('validator');
 const errorMenssages = require('../error/errorMenssages');
 const bcrypt = require('bcryptjs');
 
-const LoginValidations = async (req, res, next) => {
+async function LoginValidations(req, res, next) {
   try {
     //require params
     const { name, lastname, email, username, password, confirmpassword } =
@@ -41,6 +41,6 @@ const LoginValidations = async (req, res, next) => {
   } catch (err) {
     return err;
   }
-};
+}
 
 module.exports = LoginValidations;

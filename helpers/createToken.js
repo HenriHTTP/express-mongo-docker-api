@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const creteToken = async (user, req, res) => {
+async function createToken(user, req, res) {
   const { _id, username } = user;
   const payload = { username: username, id: _id };
 
@@ -16,6 +16,5 @@ const creteToken = async (user, req, res) => {
     token: token,
     id: _id,
   });
-};
-
-module.exports = creteToken;
+}
+module.exports = createToken;
