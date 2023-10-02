@@ -6,8 +6,8 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 async function get_token(req) {
   //token req
-  const authauthorization = req.headers.authorization;
-  const token = authauthorization.split(' ')[1];
+  const authorization = req.headers.authorization;
+  const token = authorization.split(' ')[1];
 
   return token;
 }
