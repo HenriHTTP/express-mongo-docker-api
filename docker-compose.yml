@@ -27,7 +27,7 @@ services:
        - .env
 
      volumes:
-       - .:/app/
+       - .:/app/data
 
 volumes:
    db:
