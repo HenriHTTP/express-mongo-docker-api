@@ -6,11 +6,11 @@ const path = require('path');
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 // Connection URI
-const uri = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT_APP}/${process.env.DB_NAME}`;
+const uri = process.env.MONGO_URL;
 
 //mongo connect
 mongoose
-  .connect(uri)
+  .connect(uri ,{ useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log(`Conecct to MongoDB  port ${process.env.DB_PORT_APP} `);
   })
@@ -18,4 +18,4 @@ mongoose
     console.error(`Erro in  MongoDB connection:', ${err}`);
   });
 
-module.exports = mongoose; // eu
+module.exports = mongoose;
