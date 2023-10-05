@@ -4,6 +4,7 @@ const userController = require('../controllers/userController');
 
 //validations
 const registerValidation = require('../validations/Register.validation');
+const updateValidation = require('../validations/Update.validation');
 const loginValidation = require('../validations/login.validation');
 const tokenValidation = require('../validations/token.validation');
 
@@ -11,5 +12,6 @@ router.post('/register', registerValidation, userController.registerUser);
 router.post('/login', loginValidation, userController.loginUser);
 router.get('/checkuser', tokenValidation, userController.checkuser);
 router.get('/id/:id', tokenValidation , userController.GetUserById )
+router.post('/edit',tokenValidation , updateValidation, userController.editUser)
 
 module.exports = router;
