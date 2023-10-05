@@ -2,6 +2,8 @@ const users = require('../models/user.schema');
 const bcrypt = require('bcryptjs');
 const createToken = require('../helpers/createToken');
 const decodeToken = require('../helpers/decodeToken');
+const get_token  = require('../helpers/get_token');
+const getuserbyToken = require('../helpers/getuserbytoken')
 
 class userController {
   // method register controller
@@ -50,8 +52,8 @@ class userController {
     }catch(err){
       res.status(500).json({error: `${err}`})
     }
- 
   }
+
   // method get user by id
   static async GetUserById(req,res){ 
     try{ 
@@ -62,9 +64,35 @@ class userController {
 
     }catch(err){ 
       res.status(500).json({error:`${err}`})
-    }
-   
+    }  
+  }
 
+  //method edit informations user
+  static async editUser(req,res){
+    try{ 
+      const user = await getuserbyToken(req)
+      const {name, lastname, email, username, password } = req.body
+      const salt = bcrypt.genSaltSync(10);
+      const cryptpassword = bcrypt.hashSync(password, salt);
+      const newDataUser = { 
+          name,
+          lastname,
+          email, 
+          username, 
+          password: cryptpassword,
+         }
+
+      const updateUser = await users.findOneAndUpdate(
+        {_id:user._id},
+        {$set:newDataUser},
+        {new:true},
+        )   
+      res.status(200).json(updateUser)   
+  
+    }catch(err){ 
+      res.status(500).json({error:`${err}`})
+    }
+ 
   }
   
 }
