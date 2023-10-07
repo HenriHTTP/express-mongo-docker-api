@@ -1,6 +1,6 @@
 const users = require('../models/user.schema');
 const validator = require('validator');
-const errorMessages = require('../error/errorMenssages');
+const errorRegister = require('../error/errorRegister');
 
 async function registerValidation(req, res, next) {
   try {
@@ -21,30 +21,30 @@ async function registerValidation(req, res, next) {
     // validationn  if required values  is  null
     for (const fields of requirefields) {
       if (!req.body[fields]) {
-        return res.status(400).json(errorMessages.requiredField(fields));
+        return res.status(400).json(errorRegister.requiredField(fields));
       }
     }
 
     // validationn password and  confirmpassoword  is equal
     if (password != confirmpassword) {
-      return res.status(400).json(errorMessages.passwordMismatch());
+      return res.status(400).json(errorRegister.passwordMismatch());
     }
 
     // validationn email is correct pattern
     if (!validator.isEmail(email)) {
-      return res.status(400).json(errorMessages.invalidEmailFormat());
+      return res.status(400).json(errorRegister.invalidEmailFormat());
     }
 
     // validationn  if email is already in use
     const emailExist = await users.findOne({ email: email });
     if (emailExist) {
-      return res.status(400).json(errorMessages.emailInUse());
+      return res.status(400).json(errorRegister.emailInUse());
     }
 
     // validationn  if username is already in use
     const usernameExist = await users.findOne({ username: username });
     if (usernameExist) {
-      return res.status(400).json(errorMessages.usernameInUse());
+      return res.status(400).json(errorRegister.usernameInUse());
     }
 
     next();
