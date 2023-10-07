@@ -1,6 +1,6 @@
 const users = require('../models/user.schema');
 const validator = require('validator');
-const errorMessages = require('../error/errorMenssages');
+const errorUpdate = require('../error/errorUpdate');
 
 async function registerValidation(req, res, next) {
   try {
@@ -21,18 +21,18 @@ async function registerValidation(req, res, next) {
     // validationn  if required values  is  null
     for (const fields of requirefields) {
       if (!req.body[fields]) {
-        return res.status(400).json(errorMessages.requiredField(fields));
+        return res.status(400).json(errorUpdate.requiredField(fields));
       }
     }
 
     // validationn password and  confirmpassoword  is equal
     if (password != confirmpassword) {
-      return res.status(400).json(errorMessages.passwordMismatch());
+      return res.status(400).json(errorUpdate.passwordMismatch());
     }
 
     // validationn email is correct pattern
     if (!validator.isEmail(email)) {
-      return res.status(400).json(errorMessages.invalidEmailFormat());
+      return res.status(400).json(errorUpdate.invalidEmailFormat());
     }
 
     next();
