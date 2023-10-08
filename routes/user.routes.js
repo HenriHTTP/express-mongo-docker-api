@@ -3,7 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 
 //validations
-const registerValidation = require('../validations/Register.validation');
+const registerValidation = require('../validations/register.validation');
 const updateValidation = require('../validations/Update.validation');
 const loginValidation = require('../validations/login.validation');
 const tokenValidation = require('../validations/token.validation');
