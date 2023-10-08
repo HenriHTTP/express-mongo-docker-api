@@ -8,7 +8,6 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 async function tokenValidation(req, res, next) {
   try {
-    console.log(req.headers.authorization);
     //get authorization to request
     if (!req.headers.authorization) {
       res.status(400).json(errorToken.authorizationNotFound());
