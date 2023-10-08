@@ -17,27 +17,24 @@ async function LoginValidations(req, res, next) {
       }
     }
 
-    // validation email pattern
-    if (!validator.isEmail(email)) {
+    const emailIsValid = validator.isEmail(email);
+    if (!emailIsValid) {
       return res.status(400).json(errorLogin.invalidEmailFormat());
     }
 
-    // validation if email is already in use
-    const emailExist = await users.findOne({ email: email });
-    if (!emailExist) {
+    const emailIsAlreadyUse = await users.findOne({ email: email });
+    if (!emailIsAlreadyUse) {
       return res.status(400).json(errorLogin.userNotFound());
     }
 
-    // validation if username is already in use
-    const usernameExist = await users.findOne({ username: username });
-    if (!usernameExist) {
-      return res.status(400).json(errorLogin.usernameInUse());
+    const usernameIsAlreadyUse = await users.findOne({ username: username });
+    if (!usernameIsAlreadyUse) {
+      return res.status(400).json(errorLogin.userNotFound());
     }
 
     // validation if password is invalid
     const user = await users.findOne({ email: email });
     const passwordMatch = bcrypt.compareSync(password, user.password);
-
     if (!passwordMatch) {
       return res.status(401).json(errorLogin.userNotFound());
     }

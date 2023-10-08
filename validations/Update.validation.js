@@ -5,8 +5,7 @@ const errorUpdate = require('../error/errorUpdate');
 async function registerValidation(req, res, next) {
   try {
     //require params
-    const { name, lastname, email, username, password, confirmpassword } =
-      req.body;
+    const { email, password, confirmpassword } = req.body;
 
     // dependece array
     const requirefields = [
@@ -25,13 +24,13 @@ async function registerValidation(req, res, next) {
       }
     }
 
-    // validationn password and  confirmpassoword  is equal
-    if (password != confirmpassword) {
+    const passwordMatch = password == confirmpassword;
+    if (!passwordMatch) {
       return res.status(400).json(errorUpdate.passwordMismatch());
     }
 
-    // validationn email is correct pattern
-    if (!validator.isEmail(email)) {
+    const emailIsValid = validator.isEmail(email);
+    if (!emailIsValid) {
       return res.status(400).json(errorUpdate.invalidEmailFormat());
     }
 

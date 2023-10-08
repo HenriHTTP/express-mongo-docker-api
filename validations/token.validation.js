@@ -8,26 +8,23 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 async function tokenValidation(req, res, next) {
   try {
-    //get authorization to request
-    if (!req.headers.authorization) {
+    const authorizationRequest = req.headers.authorization;
+    if (!authorizationRequest) {
       res.status(400).json(errorToken.authorizationNotFound());
     }
 
-    // get token by request
-    const token = await get_token(req);
-    if (!token) {
+    const tokenRequest = await get_token(req);
+    if (!tokenRequest) {
       res.status(400).json(errorToken.tokenNotFound());
     }
 
-    // verify token
     const tokenIsValid = JWT.verify(token, process.env.SECRET);
     if (!tokenIsValid) {
       res.status(400).json(errorToken.tokenNotFound());
     }
 
-    const decodeToken = JWT.decode(token, process.env.SECRET);
-
-    if (!decodeToken) {
+    const decodeTokenIsValid = JWT.decode(token, process.env.SECRET);
+    if (!decodeTokenIsValid) {
       res.status(400).json(errorToken.tokenNotFound());
     }
     next();
