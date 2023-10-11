@@ -4,7 +4,7 @@ logs
 *.log
 
 # Dependency directories
-node_modules/
+node_modules/Error: Malformed part header
 
 # Environment files
 .env
@@ -28,3 +28,5 @@ package-lock.json
 # Yarn lock file
 yarn.lock
 
+#storage 
+upload/**
