@@ -91,6 +91,10 @@ class userController {
       res.status(500).json({ error: `${err}` });
     }
   }
+  static async updatePhotoUser(req, res) {
+    console.log(req.file);
+    res.status(200).json(req.file);
+  }
 }
 
 module.exports = userController;
