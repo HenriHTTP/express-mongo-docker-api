@@ -18,12 +18,12 @@ async function tokenValidation(req, res, next) {
       res.status(400).json(errorToken.tokenNotFound());
     }
 
-    const tokenIsValid = JWT.verify(token, process.env.SECRET);
+    const tokenIsValid = JWT.verify(tokenRequest, process.env.SECRET);
     if (!tokenIsValid) {
       res.status(400).json(errorToken.tokenNotFound());
     }
 
-    const decodeTokenIsValid = JWT.decode(token, process.env.SECRET);
+    const decodeTokenIsValid = JWT.decode(tokenRequest, process.env.SECRET);
     if (!decodeTokenIsValid) {
       res.status(400).json(errorToken.tokenNotFound());
     }
