@@ -1,5 +1,5 @@
 const users = require('../models/user.schema');
-const getuserbyToken = require('../helpers/getuserbytoken');
+const getuserbyToken = require('../helpers/token/getuserbytoken');
 const errorToken = require('../error/errorToken');
 
 async function getUserValidation(req, res, next) {

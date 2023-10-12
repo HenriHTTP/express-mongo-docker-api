@@ -1,5 +1,5 @@
 const JWT = require('jsonwebtoken');
-const get_token = require('../helpers/get_token');
+const get_token = require('../helpers/token//get_token');
 const errorToken = require('../error/errorToken');
 const path = require('path');
 const dotenv = require('dotenv');
