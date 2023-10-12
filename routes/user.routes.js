@@ -8,10 +8,11 @@ const updateValidation = require('../validations/Update.validation');
 const loginValidation = require('../validations/login.validation');
 const tokenValidation = require('../validations/token.validation');
 const getUserValidation = require('../validations/getUser.validation');
+const uploadArquiveValidation = require('../validations/uploadArchive.validation');
 
 //services
 
-const { upload } = require('../services/multer.service');
+const { imageUpload } = require('../services/multer.service');
 
 router.post('/register', registerValidation, userController.registerUser);
 router.post('/login', loginValidation, userController.loginUser);
@@ -31,7 +32,8 @@ router.post(
 
 router.post(
   '/update/image',
-  upload.single('file'),
+  imageUpload.single('file'),
+  uploadArquiveValidation,
   userController.updatePhotoUser,
 );
 
