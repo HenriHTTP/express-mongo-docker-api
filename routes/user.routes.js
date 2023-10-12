@@ -9,6 +9,7 @@ const loginValidation = require('../validations/login.validation');
 const tokenValidation = require('../validations/token.validation');
 const getUserValidation = require('../validations/getUser.validation');
 const uploadArquiveValidation = require('../validations/uploadArchive.validation');
+const uploadValidation = require('../validations/upload.validation');
 
 //services
 
@@ -34,6 +35,7 @@ router.post(
   '/update/image',
   imageUpload.single('file'),
   uploadArquiveValidation,
+  uploadValidation,
   userController.updatePhotoUser,
 );
 
