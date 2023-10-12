@@ -1,9 +1,15 @@
 const users = require('../models/user.schema');
 const bcrypt = require('bcryptjs');
-const createToken = require('../helpers/createToken');
-const decodeToken = require('../helpers/decodeToken');
-const get_token = require('../helpers/get_token');
-const getuserbyToken = require('../helpers/getuserbytoken');
+const createToken = require('../helpers/token/createToken');
+const decodeToken = require('../helpers/token/decodeToken');
+const get_token = require('../helpers/token/get_token');
+const getuserbyToken = require('../helpers/token/getuserbytoken');
+const fileType = require('file-type');
+const fs = require('fs');
+const path = require('path');
+const uploadStore = path.resolve(__dirname, '../upload');
+
+const isImage = require('../helpers/uploads/isvalidImage');
 
 class userController {
   // method register controller
@@ -80,6 +86,7 @@ class userController {
         username,
         password: cryptpassword,
       };
+      errorUpdate;
 
       const updateUser = await users.findOneAndUpdate(
         { _id: user._id },
@@ -93,8 +100,19 @@ class userController {
   }
 
   static async updatePhotoUser(req, res) {
-    console.log(req.file);
-    res.status(200).json(req.file);
+    try {
+      const buffer = req.file.buffer;
+      const timeUploadArquive = new Date().getTime();
+      const arquiveName = req.file.originalname;
+      const filePath = path.join(
+        uploadStore,
+        `${timeUploadArquive}_${arquiveName}`,
+      );
+      fs.writeFileSync(filePath, buffer);
+      res.status(200).json({ MessageEvent: 'imagem salva' });
+    } catch (err) {
+      res.status(500).json({ error: `${err}` });
+    }
   }
 }
 
