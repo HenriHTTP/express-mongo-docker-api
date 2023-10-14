@@ -1,11 +1,20 @@
-const users = require('../models/user.schema');
+//models
+const fs = require('fs');
+const path = require('path');
 const bcrypt = require('bcryptjs');
+const users = require('../models/user.schema');
+
+//helpers  token
 const createToken = require('../helpers/token/createToken');
 const decodeToken = require('../helpers/token/decodeToken');
 const getuserbyToken = require('../helpers/token/getuserbytoken');
-const fs = require('fs');
-const path = require('path');
-const uploadStore = path.resolve(__dirname, '../upload');
+
+//helpers uploads
+const writeFile = require('../helpers/uploads/writeFile');
+const createFilePath = require('../helpers/uploads/createFilePath');
+
+//variables
+const storage = path.resolve(__dirname, '../upload');
 
 class userController {
   // method register controller
@@ -108,14 +117,13 @@ class userController {
   static async updatePhotoUser(req, res) {
     try {
       const buffer = req.file.buffer;
-      const timeUploadArquive = new Date().getTime();
       const arquiveName = req.file.originalname;
-      const filePath = path.join(
-        uploadStore,
-        `${timeUploadArquive}_${arquiveName}`,
-      );
-      fs.writeFileSync(filePath, buffer);
-      res.status(200).json({ MessageEvent: 'imagem salva' });
+      const upload_directory = await createFilePath(arquiveName, storage);
+      const saveUpload = await writeFile(upload_directory, buffer);
+
+      if (saveUpload) {
+        res.status(200).json({ MessageEvent: 'imagem salva' });
+      }
     } catch (err) {
       res.status(500).json({ error: `${err}` });
     }
