@@ -2,14 +2,10 @@ const users = require('../models/user.schema');
 const bcrypt = require('bcryptjs');
 const createToken = require('../helpers/token/createToken');
 const decodeToken = require('../helpers/token/decodeToken');
-const get_token = require('../helpers/token/get_token');
 const getuserbyToken = require('../helpers/token/getuserbytoken');
-const fileType = require('file-type');
 const fs = require('fs');
 const path = require('path');
 const uploadStore = path.resolve(__dirname, '../upload');
-
-const isImage = require('../helpers/uploads/isvalidImage');
 
 class userController {
   // method register controller
@@ -18,7 +14,7 @@ class userController {
     const salt = bcrypt.genSaltSync(10);
     const cryptpassword = bcrypt.hashSync(password, salt);
 
-    const user = new users({
+    const newuser = new users({
       name,
       lastname,
       username,
@@ -28,8 +24,14 @@ class userController {
 
     try {
       //save objeto in database
-      await user.save();
-      await createToken(user, req, res);
+      await newuser.save();
+      const user = await users.findOne({ email: email });
+      const token = await createToken(user);
+      res.status(200).json({
+        Authentication: 200,
+        token: `${token}`,
+        id: user._id,
+      });
     } catch (err) {
       res.status(500).json(err);
     }
@@ -40,9 +42,13 @@ class userController {
     try {
       const { email } = req.body;
       const user = await users.findOne({ email: email });
-
       //create new token
-      await createToken(user, req, res);
+      const token = await createToken(user);
+      res.status(200).json({
+        Authentication: 200,
+        token: `${token}`,
+        id: user._id,
+      });
     } catch (err) {
       res.status(500).json(err);
     }
