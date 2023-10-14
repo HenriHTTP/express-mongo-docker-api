@@ -8,6 +8,7 @@ const users = require('../models/user.schema');
 const createToken = require('../helpers/token/createToken');
 const decodeToken = require('../helpers/token/decodeToken');
 const getuserbyToken = require('../helpers/token/getuserbytoken');
+const get_token = require('../helpers/token/get_token');
 
 //helpers uploads
 const writeFile = require('../helpers/uploads/writeFile');
@@ -66,8 +67,12 @@ class userController {
   //method getuserbytolken
   static async checkuser(req, res) {
     try {
-      const token = await decodeToken(req);
-      const user = await users.findOne({ _id: token.id }, { password: 0 });
+      const token = await get_token(req);
+      const tokenDecode = await decodeToken(token);
+      const user = await users.findOne(
+        { _id: tokenDecode.id },
+        { password: 0 },
+      );
 
       res.status(200).json(user);
     } catch (err) {
@@ -90,7 +95,9 @@ class userController {
   //method edit informations user
   static async editUser(req, res) {
     try {
-      const user = await getuserbyToken(req);
+      const token = await get_token(req);
+      const tokenDecode = await decodeToken(token);
+      const user = await getuserbyToken(tokenDecode);
       const { name, lastname, email, username, password } = req.body;
       const salt = bcrypt.genSaltSync(10);
       const cryptpassword = bcrypt.hashSync(password, salt);
