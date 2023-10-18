@@ -3,12 +3,12 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 
 //custom middlewares
-const registerValidation = require('../validations/register.validation');
-const updateValidation = require('../validations/Update.validation');
-const loginValidation = require('../validations/login.validation');
-const tokenValidation = require('../validations/token.validation');
-const getUserValidation = require('../validations/getUser.validation');
-const uploadImageValidation = require('../validations/uploadImage.validation');
+const registerValidation = require('../validations/register/isValidRegister');
+const updateValidation = require('../validations/update/isValidUpdate');
+const loginValidation = require('../validations/login/isValidLogin');
+const tokenValidation = require('../validations/token/isValidToken');
+const getUserValidation = require('../validations/token/isValidTokenId');
+const uploadImageValidation = require('../validations/upload/isValidImageUpload');
 
 //services
 const { imageUpload } = require('../services/multer.service');
@@ -30,10 +30,12 @@ router.post(
 );
 
 router.post(
-  '/update/image',
+  '/update/avatar/:id',
+  tokenValidation,
   imageUpload.single('file'),
   uploadImageValidation,
-  userController.updatePhotoUser,
+  getUserValidation,
+  userController.updateAvatarUser,
 );
 
 module.exports = router;
