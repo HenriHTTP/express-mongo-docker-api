@@ -13,9 +13,10 @@ const get_token = require('../helpers/token/get_token');
 //helpers uploads
 const writeFile = require('../helpers/uploads/writeFile');
 const createFilePath = require('../helpers/uploads/createFilePath');
+const getFileName = require('../helpers/uploads/getFileName');
 
 //variables
-const storage = path.resolve(__dirname, '../upload');
+const storage = 'public/upload';
 
 class userController {
   // method register controller
@@ -121,12 +122,15 @@ class userController {
     }
   }
 
-  static async updatePhotoUser(req, res) {
+  static async updateAvatarUser(req, res) {
     try {
       const buffer = req.file.buffer;
       const arquiveName = req.file.originalname;
-      const upload_directory = await createFilePath(arquiveName, storage);
-      const saveUpload = await writeFile(upload_directory, buffer);
+      const uploadDirectory = await createFilePath(arquiveName, storage);
+      const saveUpload = await writeFile(uploadDirectory, buffer);
+      const fileName = await getFileName(uploadDirectory);
+
+      await users.updateOne({ _id: req.params.id }, { avatar: fileName });
 
       if (saveUpload) {
         res.status(200).json({ MessageEvent: 'imagem salva' });
