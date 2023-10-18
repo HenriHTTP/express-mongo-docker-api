@@ -27,6 +27,10 @@ const users = mongoose.model(
         type: String,
         require: true,
       },
+      avatar: {
+        type: String,
+        required: false,
+      },
     },
     { timestamps: true },
   ),
