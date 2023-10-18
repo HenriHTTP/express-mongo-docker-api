@@ -1,23 +1,7 @@
-version: '3.1'
-
+version: '3'
 services:
-  app:
-    build: .
-    image: api/docker-node
-    env_file:
-      - .env
-    command: npm run dev
-    volumes:
-      - .:/app/
-    ports:
-      - "${APP_PORT}:${APP_PORT}"
-   
-    depends_on:
-      - mongo
-    links:
-       - mongo
-
   mongo:
+     build: .
      image: mongo:5.0.2
      container_name: mongo-demon-api
      restart: always
@@ -25,9 +9,7 @@ services:
        - "${DB_PORT_APP}:${DB_PORT}"
      env_file:
        - .env
-
      volumes:
        - .:/app/data
-
 volumes:
    db:

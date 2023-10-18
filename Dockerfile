@@ -1,7 +1,4 @@
-FROM node:alpine
-WORKDIR /usr/app
-COPY package*.json ./
-RUN npm install
-COPY . .
-EXPOSE 3000
-CMD [ "npm","run","start" ]
+# Use the official MongoDB image
+FROM mongo:5.0.2
+EXPOSE 27017
+
