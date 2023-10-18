@@ -8,6 +8,7 @@ const routes = require('./routes/routes');
 // middlewares default
 app.use(Express.json());
 app.use(cors());
+app.use(Express.static('public'));
 
 //routes
 app.use('/', routes);
