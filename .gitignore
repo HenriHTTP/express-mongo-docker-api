@@ -30,3 +30,7 @@ yarn.lock
 
 #storage 
 public/upload/
+
+#editor makdown
+
+.obsidian/
