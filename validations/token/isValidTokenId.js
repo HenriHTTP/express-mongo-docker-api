@@ -1,4 +1,3 @@
-const users = require('../../models/user.schema');
 const getuserbyToken = require('../../helpers/token/getuserbytoken');
 const errorToken = require('../../error/errorToken');
 const get_token = require('../../helpers/token/get_token');
