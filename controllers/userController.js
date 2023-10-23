@@ -81,7 +81,7 @@ class userController {
     }
   }
 
-  // method get user by id
+  //method get user by id
   static async GetUserById(req, res) {
     try {
       const id = req.params.id;
