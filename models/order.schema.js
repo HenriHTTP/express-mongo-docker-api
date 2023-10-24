@@ -5,11 +5,11 @@ const order = mongoose.model(
   'Order',
   new Schema(
     {
-      username_client: {
+      usernameClient: {
         type: String,
         require: true,
       },
-      username_provider: {
+      usernameProvider: {
         type: String,
         require: true,
       },
@@ -19,7 +19,7 @@ const order = mongoose.model(
       },
       status: {
         type: String,
-        required: true,
+        default: 'in progress',
       },
     },
     { timestamps: true },
