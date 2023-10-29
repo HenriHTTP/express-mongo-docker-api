@@ -4,14 +4,12 @@ const errorUpload = require('../../error/errorUpload');
 async function isValidImageUpload(req, res, next) {
   try {
     if (!req.file) {
-      res.status(500).json(errorUpload.arquiveNotFound());
-      return;
+      return res.status(500).json(errorUpload.arquiveNotFound());
     }
 
     const isvalidImage = await isImage(req);
     if (!isvalidImage) {
-      res.status(500).json(errorUpload.invalidImage());
-      return;
+      return res.status(500).json(errorUpload.invalidImage());
     }
     next();
   } catch (err) {

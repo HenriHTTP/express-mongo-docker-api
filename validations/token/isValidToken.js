@@ -10,22 +10,22 @@ async function isValidToken(req, res, next) {
   try {
     const authorizationRequest = req.headers.authorization;
     if (!authorizationRequest) {
-      res.status(400).json(errorToken.authorizationNotFound());
+      return res.status(400).json(errorToken.authorizationNotFound());
     }
 
     const tokenRequest = await get_token(req);
     if (!tokenRequest) {
-      res.status(400).json(errorToken.tokenNotFound());
+      return res.status(400).json(errorToken.tokenNotFound());
     }
 
     const tokenIsValid = JWT.verify(tokenRequest, process.env.SECRET);
     if (!tokenIsValid) {
-      res.status(400).json(errorToken.tokenNotFound());
+      return res.status(400).json(errorToken.tokenNotFound());
     }
 
     const decodeTokenIsValid = JWT.decode(tokenRequest, process.env.SECRET);
     if (!decodeTokenIsValid) {
-      res.status(400).json(errorToken.tokenNotFound());
+      return res.status(400).json(errorToken.tokenNotFound());
     }
     next();
   } catch (err) {
