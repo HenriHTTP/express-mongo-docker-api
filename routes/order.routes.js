@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const orderController = require('../controllers/orderController');
 
-router.post('/register', orderController.createOrder);
+const oderValidation = require('../validations/oders/isValidOrder');
+
+router.post('/register', oderValidation, orderController.createOrder);
 
 module.exports = router;
