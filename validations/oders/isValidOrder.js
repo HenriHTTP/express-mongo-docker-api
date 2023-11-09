@@ -1,5 +1,7 @@
 const users = require('../../models/user.schema');
 const errorOders = require('../../error/errorOders');
+const Get_token = require('../../helpers/token/get_token');
+const decodeToken = require('../../helpers/token/decodeToken');
 
 async function isValidOrder(req, res, next) {
   try {
@@ -20,11 +22,12 @@ async function isValidOrder(req, res, next) {
       return res.status(404).json(errorOders.usernameNotFound());
     }
 
-    const isValidUsernameProvider = await users.findOne({
-      username: usernameProvider,
-    });
-    if (!isValidUsernameProvider) {
-      return res.status(404).json(errorOders.usernameNotFound());
+    const token = await Get_token(req);
+    const tokenDecode = await decodeToken(token);
+    const user = await users.findOne({ _id: tokenDecode.id }, { password: 0 });
+    const isValidTokenUser = usernameClient == user.username;
+    if (!isValidTokenUser) {
+      return res.status(400).json({ MessageEvent: 'token invalido' });
     }
 
     next();
